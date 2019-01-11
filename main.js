@@ -24,7 +24,10 @@ document.addEventListener('DOMContentLoaded', function() {
             .range([0, 500])
 
 
-        var div = d3.select(canvas).append("div").style("opacity", 0).attr("class", "tooltip")
+        var div = d3.select("body")
+            .append("div")
+            .style("opacity", 0)
+            .attr("class", "tooltip")
 
         var canvas = d3.select("body")
             .append("svg")
@@ -48,18 +51,18 @@ document.addEventListener('DOMContentLoaded', function() {
             .attr("class", "bar")
             .attr("opacity", 0.9)
             .attr('transform', 'translate(60, 0)')
-            // .on("mouseover", function(d) {
-            //     div.transition()
-            //         .duration(200)
-            //         .style("opacity", 0.9)
-            //         .style("left", (d3.event.pageX) + "px")
-            //         .style("top", (d3.event.pageY - 28) + "px");
-            // })
-            // .on("mouseout", function(d) {
-            //     div.transition()
-            //         .duration(500)
-            //         .style("opacity", 0);
-            // })
+            .on("mouseover", function(d) {
+                div.transition()
+                    .duration(200)
+                    .style("opacity", 0.9)
+                    .style("left", (d3.event.pageX) + "px")
+                    .style("top", (d3.event.pageY - 28) + "px");
+            })
+            .on("mouseout", function(d) {
+                div.transition()
+                    .duration(100)
+                    .style("opacity", 0);
+            })
         canvas.append("g")
             .attr("class", "x axis")
             .attr("transform", "translate(60,500)")
