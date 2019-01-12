@@ -9,6 +9,23 @@ document.addEventListener('DOMContentLoaded', function() {
         var yearsDate = dataset.map(function(d) {
             return new Date(d[0])
         })
+
+        var years = data.data.map(function(item) {
+            var quarter;
+            var temp = item[0].substring(5, 7);
+
+            if (temp === '01') {
+                quarter = 'Q1';
+            } else if (temp === '04') {
+                quarter = 'Q2';
+            } else if (temp === '07') {
+                quarter = 'Q3';
+            } else if (temp === '10') {
+                quarter = 'Q4';
+            }
+
+            return item[0].substring(0, 4) + ' ' + quarter
+        });
         var x = d3.scaleTime().domain([d3.min(yearsDate), d3.max(yearsDate)])
             .range([0, 500])
 
@@ -51,12 +68,13 @@ document.addEventListener('DOMContentLoaded', function() {
             .attr("class", "bar")
             .attr("opacity", 0.9)
             .attr('transform', 'translate(60, 0)')
-            .on("mouseover", function(d) {
+            .on("mouseover", function(d, i) {
                 div.transition()
                     .duration(200)
                     .style("opacity", 0.9)
                     .style("left", (d3.event.pageX) + "px")
-                    .style("top", (d3.event.pageY - 28) + "px");
+                    .style("top", (d3.event.pageY - 28) + "px")
+                div.html(years[i] + "<br/> $" + d[1].toFixed(1) + " Billion")
             })
             .on("mouseout", function(d) {
                 div.transition()
@@ -73,5 +91,10 @@ document.addEventListener('DOMContentLoaded', function() {
             .attr("transform", "translate(60,0)")
             .call(d3.axisLeft(linearScale));
 
+        canvas.append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("x", -300)
+            .attr("y", 80)
+            .text("Gross Domestic Product")
     }
 })
