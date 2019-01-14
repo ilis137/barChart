@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
             .attr("x", 300)
             .attr("width", 600)
             .attr("height", 600)
-
+        console.log(canvas)
         canvas.selectAll("rect")
             .data(dataset)
             .enter()
